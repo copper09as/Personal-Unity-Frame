@@ -1,0 +1,5 @@
+C:\Users\49469\Documents\NetGame\Game\Game\obj\Debug\net5.0\Game.csproj.AssemblyReference.cache
+C:\Users\49469\Documents\NetGame\Game\Game\obj\Debug\net5.0\Game.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\49469\Documents\NetGame\Game\Game\obj\Debug\net5.0\Game.AssemblyInfoInputs.cache
+C:\Users\49469\Documents\NetGame\Game\Game\obj\Debug\net5.0\Game.AssemblyInfo.cs
+C:\Users\49469\Documents\NetGame\Game\Game\obj\Debug\net5.0\Game.csproj.CoreCompileInputs.cache

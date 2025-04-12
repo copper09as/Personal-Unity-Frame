@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoginPanel : UiBase
@@ -34,12 +35,16 @@ public class LoginPanel : UiBase
         MsgLogin msg = (MsgLogin)msgBase;
         if (msg.result==0)
         {
+            GameApp.id = msg.id;
+            SceneManager.LoadScene("Battle");
             Debug.Log("µÇÂ½³É¹¦");
             _ = GameApp.Instance.uiManager.GetUi("TipPanel", "Log Succ");
         }
         else
+        {
             _ = GameApp.Instance.uiManager.GetUi("TipPanel", "Log Fail");
-
+        }
+        
     }
 
 

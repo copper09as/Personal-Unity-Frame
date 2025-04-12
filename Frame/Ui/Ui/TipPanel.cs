@@ -6,22 +6,22 @@ using UnityEngine.UI;
 
 public class TipPanel : UiBase
 {
-    [SerializeField] private Button CloseBtn;
+    [SerializeField] private Button closeBtn;
     public TextMeshProUGUI tip;
-    public override void OnOpen()
+    public override void OnEnter()
     {
-        base.OnOpen();
-        CloseBtn.onClick.AddListener(OnCloseClick);
+        base.OnEnter();
+        closeBtn.onClick.AddListener(OnCloseClick);
     }
     public void OnCloseClick()
     {
-        OnExit();
         GameApp.Instance.uiManager.PopUi();
+        Destroy(gameObject);
     }
     public override void OnExit()
     {
         base.OnExit();
-        CloseBtn.onClick.RemoveListener(OnCloseClick);
+        closeBtn.onClick.RemoveListener(OnCloseClick);
 
     }
 }

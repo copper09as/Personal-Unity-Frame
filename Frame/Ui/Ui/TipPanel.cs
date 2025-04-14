@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TipPanel : UiBase
+public class TipPanel : UiBase,IinitUi
 {
     [SerializeField] private Button closeBtn;
     public TextMeshProUGUI tip;
@@ -15,13 +15,18 @@ public class TipPanel : UiBase
     }
     public void OnCloseClick()
     {
-        GameApp.Instance.uiManager.PopUi();
-        Destroy(gameObject);
+        OnExit();
     }
     public override void OnExit()
     {
         base.OnExit();
+        Destroy(gameObject);
         closeBtn.onClick.RemoveListener(OnCloseClick);
 
+    }
+
+    public void InitId(int id)
+    {
+        throw new System.NotImplementedException();
     }
 }

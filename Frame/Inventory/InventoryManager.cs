@@ -53,7 +53,7 @@ public class InventoryManager
                 return true;
             }
         }
-        _ = GameApp.Instance.uiManager.GetUi("TipPanel", "Bag is fill!");
+        _ = GameApp.Instance.uiManager.GetTipUi("Bag is fill!");
         return false;
     }
     public bool RemoveItem(int id, int mount)
@@ -77,5 +77,14 @@ public class InventoryManager
     public void SortItem()//空格子移动至最后
     {
     }
+    public void SwapItem(int id_1,int id_2)
+    {
+        if (id_1 == -1 || id_2 == -1)
+            return;
+        var temp = items[id_2];
+        items[id_2] = items[id_1];
+        items[id_1] = temp;
+    }
+
     public ItemId[] GetItems() => items;
 }

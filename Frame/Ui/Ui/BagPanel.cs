@@ -16,8 +16,11 @@ public class BagPanel : UiBase
     [SerializeField] int currentPage = 1;
     [SerializeField] Button nextPageBtn;
     [SerializeField] Button prePageBtn;
+    [SerializeField] Button closeBtn;
     [SerializeField] TextMeshProUGUI pageText;
     InventoryManager inventoryManager;
+    int times = 0;
+    bool inEnter = false;
     public void NextPage()
     { 
         if(currentPage<maxPage)
@@ -34,12 +37,20 @@ public class BagPanel : UiBase
         }
         UpdateSlot();
     }
-    public override void OnOpen()
+    private void OnCloseClick()
+    {
+        GameApp.Instance.uiManager.CloseUi("BagPanel");
+        BagSlot.inDrag = false;
+    }
+    public override void Awake()
     {
         inventoryManager = GameApp.Instance.inventoryManager;
         items = inventoryManager.GetItems();
         maxPage = items.Length / perMount;
         CreateSlot();
+    }
+    public override void OnOpen()
+    {
         base.OnOpen();
     }
     public override void OnEnter()
@@ -47,13 +58,23 @@ public class BagPanel : UiBase
         currentPage = 1;
         nextPageBtn.onClick.AddListener(NextPage);
         prePageBtn.onClick.AddListener(LastPage);
-        pageText.text = currentPage.ToString() + "/" + maxPage.ToString();
+        closeBtn.onClick.AddListener(OnCloseClick);
+        GameApp.Instance.eventCenter.AddNormalListener("UpdateUi", UpdateSlot);
+        UpdateSlot();
+        inEnter = true;
         base.OnEnter();
     }
     public override void OnExit()
     {
+        
         nextPageBtn.onClick.RemoveListener(NextPage);
         prePageBtn.onClick.RemoveListener(LastPage);
+        closeBtn.onClick.RemoveListener(OnCloseClick);
+        GameApp.Instance.eventCenter.RemoveNormalListener("UpdateUi", UpdateSlot);
+        BagSlot.inDrag = false;
+        GameApp.Instance.uiManager.CloseUi("BagTipPanel");
+        GameApp.Instance.uiManager.CloseUi("ItemDragPanel");
+        inEnter = false;
         base.OnExit();
     }
     private void CreateSlot()
@@ -61,12 +82,11 @@ public class BagPanel : UiBase
         GameObject slotskinRes = GameApp.Instance.resManager.LoadPrefab("Assets/Prefab/Ui/Slot");
         for (int i = perMount * (currentPage - 1); i < perMount * currentPage; i++)
         {
-            Debug.Log($"Actual perMount value: {perMount}");
             var slotOb = (GameObject)Instantiate(slotskinRes);
             slotOb.transform.SetParent(slotsTransform);
             var slot = slotOb.GetComponent<BagSlot>();
             slots.Add(slot);
-            slot.SetSlot(inventoryManager.FindItem(items[i].id), items[i].mount);
+            slot.SetSlot(inventoryManager.FindItem(items[i].id), items[i].mount,i);
         }
         
     }
@@ -75,7 +95,7 @@ public class BagPanel : UiBase
         for (int i = perMount * (currentPage - 1); i < perMount * currentPage; i++)
         {
             var slot = slots[i%perMount];
-            slot.SetSlot(inventoryManager.FindItem(items[i].id), items[i].mount);
+            slot.SetSlot(inventoryManager.FindItem(items[i].id), items[i].mount,i);
         }
         pageText.text = currentPage.ToString() + "/" + maxPage.ToString();
     }

@@ -27,7 +27,7 @@ public class LoginPanel : UiBase
 
     private void OnConnectSucc(string err)
     {
-        _ = GameApp.Instance.uiManager.GetUi("TipPanel",err);
+        _ = GameApp.Instance.uiManager.GetTipUi(err);
     }
 
     private void OnMsgLogin(MsgBase msgBase)
@@ -38,11 +38,11 @@ public class LoginPanel : UiBase
             GameApp.id = msg.id;
             SceneManager.LoadScene("Battle");
             Debug.Log("µÇÂ½³É¹¦");
-            _ = GameApp.Instance.uiManager.GetUi("TipPanel", "Log Succ");
+            _ = GameApp.Instance.uiManager.GetTipUi("Log Succ");
         }
         else
         {
-            _ = GameApp.Instance.uiManager.GetUi("TipPanel", "Log Fail");
+            _ = GameApp.Instance.uiManager.GetTipUi("Log Fail");
         }
         
     }
@@ -57,7 +57,7 @@ public class LoginPanel : UiBase
     {
         if(idInput.text == "" || pwInput.text == "")
         {
-            _ = GameApp.Instance.uiManager.GetUi("TipPanel", "pw or id is empty! ");
+            _ = GameApp.Instance.uiManager.GetTipUi("pw or id is empty! ");
             return;
         }
         MsgLogin msgLogin = new MsgLogin();

@@ -4,12 +4,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BagTipPanel : UiBase
+public class BagTipPanel : UiBase,IinitUi
 {   
     [SerializeField] private ItemData item;
     [SerializeField] private TextMeshProUGUI desText;
-    public void SetItem(ItemData item)
+
+    public void InitId(int id)
     {
+        var item = GameApp.Instance.inventoryManager.FindItem(id);
         desText.text = item.description;
     }
+
 }
